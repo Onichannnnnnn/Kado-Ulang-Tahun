@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🌌 Selamat Ulang Tahun 🌌</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #ff6eb4;
+  --violet: #a855f7;
+  --indigo: #4f46e5;
+  --gold: #fbbf24;
+  --cyan: #22d3ee;
+  --deep: #04000f;
+  --glow-pink: 0 0 20px #ff6eb4, 0 0 40px #c850c0;
+  --glow-gold: 0 0 15px #fbbf24, 0 0 30px #f59e0b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--deep);
+  font-family: 'Raleway', sans-serif;
+  cursor: none;
+}
+
+/* Custom cursor */
+#cursor {
+  position: fixed; width: 12px; height: 12px;
+  background: var(--pink); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s;
+  box-shadow: var(--glow-pink);
+  mix-blend-mode: screen;
+}
+#cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1.5px solid rgba(255,110,180,0.5);
+  border-radius: 50%; pointer-events: none;
+  z-index: 9998; transform: translate(-50%,-50%);
+  transition: all .12s ease;
+}
+@media (hover:none) { #cursor, #cursor-ring { display:none; } html,body { cursor: default; } }
+
+/* ============== SHARED BG CANVAS ============== */
+#bg-canvas {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+
+/* ============== SCENE SYSTEM ============== */
+.scene {
+  position: fixed; inset: 0;
+  z-index: 1;
+  transition: opacity 1.8s cubic-bezier(.4,0,.2,1);
+}
+.scene.hidden { opacity: 0; pointer-events: none; }
+
+/* ============== SCENE 1: INTRO ============== */
+#scene-intro {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 1rem;
+}
+
+.intro-orbit-wrap {
+  position: relative;
+  width: min(280px, 55vw); height: min(280px, 55vw);
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+  flex-shrink: 0;
+}
+.orbit-svg {
+  position: absolute; inset: 0;
+  animation: orbitSpin 10s linear infinite;
+}
+@keyframes orbitSpin { to { transform: rotate(360deg); } }
+.orbit-svg-2 {
+  position: absolute; inset: 0;
+  animation: orbitSpin 16s linear infinite reverse;
+  opacity: .7;
+}
+
+.globe-center {
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, #ffcbee 0%, #e040fb 25%, #7b2fff 55%, #160035 100%);
+  box-shadow: 0 0 50px rgba(200,80,255,.7), 0 0 100px rgba(100,50,200,.4), inset 0 0 30px rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(2.2rem, 7vw, 3.5rem);
+  animation: globePulse 3s ease-in-out infinite;
+}
+@keyframes globePulse {
+  0%,100% { transform: scale(1); box-shadow: 0 0 50px rgba(200,80,255,.7),0 0 100px rgba(100,50,200,.4),inset 0 0 30px rgba(255,255,255,.08); }
+  50% { transform: scale(1.06); box-shadow: 0 0 70px rgba(200,80,255,1),0 0 140px rgba(150,80,255,.6),inset 0 0 40px rgba(255,255,255,.12); }
+}
+
+.intro-title {
+  font-family: 'Cinzel Decorative', serif;
+  
+  /* Ukuran font diperkecil sedikit agar muat untuk teks yang panjang */
+  font-size: clamp(1rem, 4.2vw, 3.5rem); 
+  
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  text-shadow: var(--glow-pink);
+  animation: titlePulse 2.5s ease-in-out infinite, fadeUp .9s ease both;
+  
+  /* Jarak antar huruf dirapatkan sedikit */
+  letter-spacing: 0.5px; 
+  
+  /* MEMAKSA TEKS AGAR TETAP 1 BARIS */
+  white-space: nowrap; 
+}
+@keyframes titlePulse {
+  0%,100% { text-shadow: 0 0 20px #ff6eb4,0 0 40px #c850c0; }
+  50% { text-shadow: 0 0 35px #ff9de2,0 0 70px #ff6eb4,0 0 100px #c850c0; }
+}
+
+.intro-subtitle {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1rem, 3.5vw, 2rem);
+  color: var(--gold);
+  text-shadow: var(--glow-gold);
+  margin-top: .6em;
+  animation: goldPulse 3s ease-in-out infinite, fadeUp .9s ease .2s both;
+}
+@keyframes goldPulse {
+  0%,100% { text-shadow: 0 0 15px #fbbf24,0 0 30px #f59e0b; }
+  50% { text-shadow: 0 0 25px #ffe066,0 0 55px #fbbf24,0 0 80px #f59e0b; }
+}
+
+.intro-tagline {
+  font-size: clamp(.75rem, 2vw, 1rem);
+  font-weight: 300;
+  color: rgba(255,220,255,.75);
+  letter-spacing: clamp(2px, .5vw, 5px);
+  text-transform: uppercase;
+  margin-top: 1em;
+  animation: fadeUp .9s ease .5s both;
+}
+
+.enter-btn {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(.8rem,2.5vw,1rem) clamp(2rem,6vw,3.5rem);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(.8rem, 2vw, 1rem);
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6eb4 0%, #c850c0 40%, #7b2fff 100%);
+  border: none; border-radius: 60px; cursor: pointer;
+  letter-spacing: 2px;
+  box-shadow: 0 0 25px rgba(200,80,220,.5), 0 4px 30px rgba(0,0,0,.5);
+  animation: btnFloat 2.5s ease-in-out infinite, fadeUp .9s ease .8s both;
+  transition: transform .2s, box-shadow .2s;
+  position: relative; overflow: hidden;
+}
+.enter-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.15), transparent);
+  border-radius: 60px;
+}
+.enter-btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 45px rgba(200,80,220,.8), 0 8px 40px rgba(0,0,0,.5);
+}
+@keyframes btnFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(25px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* Floating hearts */
+.heart-particle {
+  position: fixed;
+  pointer-events: none;
+  font-size: var(--fs);
+  animation: heartRise var(--dur) linear var(--del) infinite;
+  bottom: -60px; opacity: 0;
+  z-index: 2;
+}
+@keyframes heartRise {
+  0% { opacity:0; transform: translateY(0) rotate(0deg) scale(.8); }
+  8% { opacity: .9; }
+  90% { opacity: .6; }
+  100% { opacity:0; transform: translateY(-110vh) rotate(var(--rot)) scale(1.2); }
+}
+
+/* ============== SCENE 2: GALAXY GALLERY ============== */
+#scene-galaxy { display: none; }
+#scene-galaxy.active-scene { display: block; }
+
+#galaxy-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
+
+/* Header overlay */
+.galaxy-header {
+  position: absolute; top: 0; left: 0; right: 0;
+  padding: clamp(.8rem,2vw,1.5rem) 1.5rem;
+  text-align: center;
+  background: linear-gradient(to bottom, rgba(4,0,15,.9) 0%, transparent 100%);
+  z-index: 10; pointer-events: none;
+}
+.galaxy-header h2 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1rem, 3.5vw, 2.2rem);
+  color: #fff;
+  text-shadow: var(--glow-pink);
+  animation: titlePulse 3s ease-in-out infinite;
+}
+.galaxy-header p {
+  font-size: clamp(.65rem, 1.8vw, .9rem);
+  color: rgba(200,160,255,.8);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-top: .4em;
+  font-weight: 300;
+}
+
+/* Music & back controls */
+.galaxy-controls {
+  position: absolute; bottom: clamp(15px,3vw,28px);
+  left: 50%; transform: translateX(-50%);
+  display: flex; gap: 1rem; z-index: 10;
+  flex-wrap: wrap; justify-content: center;
+}
+.ctrl-btn {
+  padding: .6rem 1.6rem;
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(.75rem, 2vw, .9rem);
+  font-weight: 600;
+  color: rgba(255,255,255,.9);
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,110,180,.3);
+  border-radius: 40px; cursor: pointer;
+  backdrop-filter: blur(12px);
+  letter-spacing: 1.5px;
+  transition: all .25s;
+  box-shadow: 0 0 15px rgba(255,110,180,.1);
+}
+.ctrl-btn:hover {
+  background: rgba(255,110,180,.15);
+  border-color: rgba(255,110,180,.7);
+  box-shadow: 0 0 25px rgba(255,110,180,.4);
+  transform: translateY(-2px);
+}
+
+/* Hint toast */
+.hint-toast {
+  position: absolute; top: clamp(80px,12vw,120px);
+  left: 50%; transform: translateX(-50%);
+  background: rgba(255,110,180,.12);
+  border: 1px solid rgba(255,110,180,.3);
+  border-radius: 30px; padding: .5rem 1.3rem;
+  font-size: clamp(.65rem, 1.8vw, .8rem);
+  color: rgba(255,200,240,.85);
+  letter-spacing: 1.5px;
+  backdrop-filter: blur(10px);
+  z-index: 10; pointer-events: none;
+  animation: hintFade 5s ease 2s forwards;
+}
+@keyframes hintFade {
+  0% { opacity:1; } 80% { opacity:1; } 100% { opacity:0; }
+}
+
+/* ============== LIGHTBOX ============== */
+#lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.88);
+  backdrop-filter: blur(16px) saturate(180%);
+  z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s;
+}
+#lightbox.open { opacity: 1; pointer-events: all; }
+
+.lb-inner {
+  position: relative;
+  max-width: min(88vw, 520px);
+  width: 100%;
+  animation: lbPop .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes lbPop { from { transform:scale(.5) translateY(30px); opacity:0; } to { transform:scale(1) translateY(0); opacity:1; } }
+
+.lb-img-wrap {
+  border-radius: 20px; overflow: hidden;
+  border: 2px solid rgba(255,110,180,.5);
+  box-shadow: 0 0 60px rgba(255,110,180,.4), 0 20px 60px rgba(0,0,0,.6);
+  background: linear-gradient(135deg, #1a0040, #060020);
+  min-height: 200px;
+  display: flex; align-items: center; justify-content: center;
+}
+.lb-img-wrap img { width: 100%; display: block; border-radius: 18px; }
+.lb-placeholder {
+  padding: 3rem; text-align: center;
+  font-size: 4rem; color: rgba(255,255,255,.7);
+}
+.lb-caption {
+  margin-top: 1rem; text-align: center;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(.8rem,2vw,1rem);
+  color: rgba(255,200,240,.9);
+  text-shadow: 0 0 15px rgba(255,110,180,.5);
+}
+#lb-close {
+  position: absolute; top: -44px; right: 0;
+  background: none; border: none;
+  color: rgba(255,255,255,.8); font-size: 1.8rem;
+  cursor: pointer; line-height: 1;
+  transition: transform .2s, color .2s;
+  font-weight: 300;
+}
+#lb-close:hover { transform: rotate(90deg) scale(1.2); color: var(--pink); }
+
+/* ============== AUTOPLAY NOTICE ============== */
+#music-notice {
+  position: fixed; bottom: 80px; right: 20px;
+  background: rgba(255,110,180,.12);
+  border: 1px solid rgba(255,110,180,.3);
+  border-radius: 16px; padding: .7rem 1.2rem;
+  font-size: .8rem; color: rgba(255,200,240,.9);
+  z-index: 50; backdrop-filter: blur(12px);
+  animation: noticePop .5s cubic-bezier(.34,1.56,.64,1) both;
+  display: flex; align-items: center; gap: .5rem;
+  cursor: pointer; transition: all .2s;
+}
+#music-notice:hover { background: rgba(255,110,180,.22); }
+#music-notice.hidden { display: none; }
+@keyframes noticePop { from { transform:scale(.8) translateY(20px); opacity:0; } to { transform:scale(1) translateY(0); opacity:1; } }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Shared BG canvas -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Music autoplay notice -->
+<div id="music-notice" onclick="startMusic()">🎵 Tap untuk putar musik</div>
+
+<!-- ==================== SCENE 1 ==================== -->
+<div class="scene" id="scene-intro">
+  <div id="hearts-container"></div>
+
+  <div class="intro-orbit-wrap">
+    <!-- Orbit ring SVG 1 -->
+    <svg class="orbit-svg" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="140" cy="140" rx="130" ry="130" stroke="url(#g1)" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <circle cx="270" cy="140" r="7" fill="#ff6eb4" filter="url(#blur1)"/>
+      <circle cx="10"  cy="140" r="5" fill="#a855f7" filter="url(#blur1)"/>
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="280" y2="280" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#ff6eb4" stop-opacity=".8"/>
+          <stop offset=".5" stop-color="#a855f7" stop-opacity=".3"/>
+          <stop offset="1" stop-color="#4f46e5" stop-opacity=".6"/>
+        </linearGradient>
+        <filter id="blur1"><feGaussianBlur stdDeviation="3"/></filter>
+      </defs>
+    </svg>
+    <!-- Orbit ring SVG 2 (tilted) -->
+    <svg class="orbit-svg-2" viewBox="0 0 280 280" fill="none" style="transform:rotate(0deg) scaleY(.4);">
+      <ellipse cx="140" cy="140" rx="130" ry="130" stroke="url(#g2)" stroke-width="1.5" stroke-dasharray="4 6"/>
+      <circle cx="270" cy="140" r="6" fill="#22d3ee" filter="url(#blur2)"/>
+      <defs>
+        <linearGradient id="g2" x1="0" y1="0" x2="280" y2="280" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#22d3ee" stop-opacity=".7"/>
+          <stop offset="1" stop-color="#a855f7" stop-opacity=".3"/>
+        </linearGradient>
+        <filter id="blur2"><feGaussianBlur stdDeviation="2.5"/></filter>
+      </defs>
+    </svg>
+    <div class="globe-center">🎂</div>
+  </div>
+
+  <div class="intro-title">✨ Selamat Ulang Tahun Bapak ✨</div>
+  <div class="intro-subtitle">3 Mei 2026</div>
+  <div class="intro-tagline">Semoga sehat selalu & panjang umur</div>
+  <button class="enter-btn" onclick="goToGalaxy()">Jelajahi Galeri Bintang</button>
+</div>
+
+<!-- ==================== SCENE 2 ==================== -->
+<div class="scene hidden" id="scene-galaxy">
+  <canvas id="galaxy-canvas"></canvas>
+
+  <div class="galaxy-header">
+    <h2>🌌 Galeri Kenangan di Alam Semesta 🌌</h2>
+    <p>✦ Momen-momen berharga yang bersinar seperti bintang ✦</p>
+  </div>
+
+  <div class="hint-toast">✦ Klik foto untuk memperbesar ✦</div>
+
+  <div class="galaxy-controls">
+    <button class="ctrl-btn" onclick="toggleMusic()" id="music-btn">🔇 Musik</button>
+    <button class="ctrl-btn" onclick="goToIntro()">← Kembali</button>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <div class="lb-inner">
+    <button id="lb-close" onclick="closeLB()">✕</button>
+    <div class="lb-img-wrap" id="lb-content"></div>
+    <div class="lb-caption" id="lb-caption"></div>
+  </div>
+</div>
+
+<script>
+// =====================================================
+//  UTILS
+// =====================================================
+const $ = id => document.getElementById(id);
+const lerp = (a,b,t) => a + (b-a)*t;
+const rnd  = (min,max) => Math.random()*(max-min)+min;
+const PI2  = Math.PI*2;
+
+// Cursor
+const cur = $('cursor'), curR = $('cursor-ring');
+let mx=window.innerWidth/2, my=window.innerHeight/2, rx=mx, ry=my;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function animCursor(){
+  rx=lerp(rx,mx,.15); ry=lerp(ry,my,.15);
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+  curR.style.left=rx+'px'; curR.style.top=ry+'px';
+  requestAnimationFrame(animCursor);
+})();
+
+// =====================================================
+//  AMBIENT MUSIC  (Web Audio API)
+// =====================================================
+let audioCtx=null, musicPlaying=false, musicNodes=[];
+
+function buildReverb(ctx, seconds=3, decay=2) {
+  const len = ctx.sampleRate * seconds;
+  const buf = ctx.createBuffer(2, len, ctx.sampleRate);
+  for (let ch=0; ch<2; ch++) {
+    const d = buf.getChannelData(ch);
+    for (let i=0; i<len; i++) d[i] = (Math.random()*2-1)*Math.pow(1-i/len, decay);
+  }
+  const conv = ctx.createConvolver();
+  conv.buffer = buf;
+  return conv;
+}
+
+function startMusic() {
+  if (musicPlaying) return;
+  const notice = $('music-notice');
+  if(notice) notice.classList.add('hidden');
+
+  audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  if (audioCtx.state==='suspended') audioCtx.resume();
+
+  const master = audioCtx.createGain();
+  master.gain.setValueAtTime(0, audioCtx.currentTime);
+  master.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime+3);
+  master.connect(audioCtx.destination);
+
+  const reverb = buildReverb(audioCtx, 4, 2.5);
+  reverb.connect(master);
+
+  const delay = audioCtx.createDelay(1.0);
+  delay.delayTime.value = 0.55;
+  const delFb = audioCtx.createGain(); delFb.gain.value = 0.35;
+  delay.connect(delFb); delFb.connect(delay); delay.connect(reverb);
+
+  // Drone notes – pentatonic space pad
+  const notes = [55, 82.5, 110, 138.6, 165, 220, 277.2];
+  const chords = [
+    [notes[0],notes[2],notes[4]],
+    [notes[1],notes[3],notes[5]],
+    [notes[0],notes[2],notes[6]],
+    [notes[1],notes[4],notes[5]],
+  ];
+  let chordIdx=0;
+
+  function playChord() {
+    if (!musicPlaying) return;
+    const chord = chords[chordIdx % chords.length];
+    chordIdx++;
+    chord.forEach(freq => {
+      const osc = audioCtx.createOscillator();
+      const env = audioCtx.createGain();
+      osc.type='sine'; osc.frequency.value=freq;
+      const t=audioCtx.currentTime;
+      env.gain.setValueAtTime(0,t);
+      env.gain.linearRampToValueAtTime(0.12,t+2);
+      env.gain.setValueAtTime(0.12,t+6);
+      env.gain.linearRampToValueAtTime(0,t+9);
+      osc.connect(env); env.connect(delay); env.connect(reverb);
+      osc.start(t); osc.stop(t+10);
+      musicNodes.push(osc,env);
+    });
+    setTimeout(playChord, 7000);
+  }
+
+  // Sub-bass pulse
+  const bass = audioCtx.createOscillator();
+  const bassEnv = audioCtx.createGain();
+  const bassFilter = audioCtx.createBiquadFilter();
+  bassFilter.type='lowpass'; bassFilter.frequency.value=120;
+  bass.type='sine'; bass.frequency.value=27.5;
+  bassEnv.gain.value=0.18;
+  bass.connect(bassEnv); bassEnv.connect(bassFilter); bassFilter.connect(master);
+
+  // LFO on bass
+  const lfo = audioCtx.createOscillator();
+  const lfoGain = audioCtx.createGain();
+  lfo.frequency.value=0.07; lfoGain.gain.value=4;
+  lfo.connect(lfoGain); lfoGain.connect(bass.frequency);
+
+  // Sparkle high notes
+  function sparkle() {
+    if (!musicPlaying) return;
+    const sparkleFqs=[880,1108.7,1318.5,1760,2217.5];
+    const osc=audioCtx.createOscillator();
+    const env=audioCtx.createGain();
+    osc.type='sine';
+    osc.frequency.value=sparkleFqs[Math.floor(Math.random()*sparkleFqs.length)];
+    const t=audioCtx.currentTime;
+    env.gain.setValueAtTime(0,t);
+    env.gain.linearRampToValueAtTime(0.04,t+.1);
+    env.gain.exponentialRampToValueAtTime(0.001,t+1.5);
+    osc.connect(env); env.connect(reverb);
+    osc.start(t); osc.stop(t+2);
+    setTimeout(sparkle, rnd(800,2500));
+  }
+
+  bass.start(); lfo.start();
+  musicPlaying=true;
+  playChord();
+  sparkle();
+  const btn = $('music-btn');
+  if(btn) btn.textContent='🔊 Musik';
+  musicNodes.push(bass,lfo);
+}
+
+function toggleMusic() {
+  if (!audioCtx) { startMusic(); return; }
+  const btn = $('music-btn');
+  if (musicPlaying) {
+    audioCtx.suspend();
+    musicPlaying=false;
+    if(btn) btn.textContent='🔇 Musik';
+  } else {
+    audioCtx.resume();
+    musicPlaying=true;
+    if(btn) btn.textContent='🔊 Musik';
+  }
+}
+
+// Autoplay attempt
+window.addEventListener('load', () => {
+  setTimeout(()=>{ try{ startMusic(); } catch(e){} }, 500);
+});
+document.addEventListener('click', ()=>{ if(!musicPlaying) startMusic(); }, { once:true });
+document.addEventListener('touchstart', ()=>{ if(!musicPlaying) startMusic(); }, { once:true });
+
+// =====================================================
+//  SHARED BG CANVAS  (stars – both scenes)
+// =====================================================
+const bgC = $('bg-canvas');
+const bgX = bgC.getContext('2d');
+let bgW, bgH, bgStars=[];
+
+function resizeBg() {
+  bgW=bgC.width=window.innerWidth;
+  bgH=bgC.height=window.innerHeight;
+}
+
+function initBgStars() {
+  bgStars=[];
+  const n = Math.min(400, Math.floor(bgW*bgH/3000));
+  for (let i=0;i<n;i++) bgStars.push({
+    x:Math.random()*bgW, y:Math.random()*bgH,
+    r:Math.random()*1.5+.2,
+    a:Math.random(), da:(Math.random()-.5)*.006,
+    hue: 200+Math.random()*160
+  });
+}
+
+let shootStars=[];
+function addShoot() {
+  if (Math.random()<.3) shootStars.push({
+    x:Math.random()*bgW, y:Math.random()*bgH*.5,
+    vx: rnd(6,14), vy: rnd(3,7),
+    len: rnd(80,180), a:1, life:1
+  });
+  setTimeout(addShoot, rnd(1500,4000));
+}
+addShoot();
+
+function drawBg() {
+  bgX.clearRect(0,0,bgW,bgH);
+  // twinkling bg stars
+  for (const s of bgStars) {
+    s.a+=s.da; if(s.a>1||s.a<0) s.da*=-1;
+    bgX.beginPath();
+    bgX.arc(s.x, s.y, s.r, 0, PI2);
+    bgX.fillStyle=`hsla(${s.hue},80%,90%,${s.a})`;
+    bgX.fill();
+  }
+  // shooting stars
+  for (let i=shootStars.length-1;i>=0;i--) {
+    const s=shootStars[i];
+    bgX.beginPath();
+    bgX.moveTo(s.x,s.y);
+    bgX.lineTo(s.x-s.vx*(s.len/14), s.y-s.vy*(s.len/14));
+    const grad=bgX.createLinearGradient(s.x,s.y,s.x-s.vx*10,s.y-s.vy*10);
+    grad.addColorStop(0,`rgba(255,220,255,${s.a})`);
+    grad.addColorStop(1,'transparent');
+    bgX.strokeStyle=grad; bgX.lineWidth=1.5;
+    bgX.stroke();
+    s.x+=s.vx; s.y+=s.vy; s.a-=.02;
+    if (s.a<=0||s.x>bgW||s.y>bgH) shootStars.splice(i,1);
+  }
+  requestAnimationFrame(drawBg);
+}
+
+resizeBg(); initBgStars(); drawBg();
+window.addEventListener('resize',()=>{ 
+  resizeBg(); 
+  initBgStars(); 
+  if($('scene-galaxy').classList.contains('active-scene')) initGalaxy(); 
+});
+
+// =====================================================
+//  FLOATING HEARTS (Scene 1)
+// =====================================================
+const heartEmojis=['💕','💖','💗','💓','💞','❤️','🩷','💝','💘','🌸'];
+const hCont = $('hearts-container');
+if(hCont) {
+  for (let i=0;i<22;i++){
+    const h=document.createElement('div');
+    h.className='heart-particle';
+    h.textContent=heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+    h.style.cssText=`--fs:${rnd(.8,2.2)}rem;left:${Math.random()*100}%;--dur:${rnd(5,12)}s;--del:${rnd(0,10)}s;--rot:${rnd(-200,200)}deg;`;
+    hCont.appendChild(h);
+  }
+}
+
+// =====================================================
+//  SCENE TRANSITIONS
+// =====================================================
+function goToGalaxy() {
+  $('scene-intro').classList.add('hidden');
+  const g=$('scene-galaxy');
+  g.classList.remove('hidden');
+  g.classList.add('active-scene');
+  // Beri sedikit delay agar browser selesai render layout sebelum init canvas
+  setTimeout(initGalaxy, 100);
+}
+
+function goToIntro() {
+  $('scene-galaxy').classList.remove('active-scene');
+  $('scene-galaxy').classList.add('hidden');
+  $('scene-intro').classList.remove('hidden');
+}
+
+// =====================================================
+//  GALAXY CANVAS
+// =====================================================
+let galCanvas, galCtx, galW, galH;
+let particles=[], planets=[], photoNodes=[], galShootingStars=[];
+let galTick=0, galInited=false;
+let mouseGX=0, mouseGY=0;
+
+// 10 photo slots – replace src with real photo URLs
+const PHOTOS = [
+  { src:'picture (9).png', label:'Momen Lebaran', emoji:'🕌' },
+  { src:'picture (1).png', label:'Menjelajah Bastem', emoji:'🌟' },
+  { src:'picture (2).png', label:'Masa Muda', emoji:'💖' },
+  { src:'picture (3).png', label:'Memandang Laut', emoji:'🌸' },
+  { src:'picture (7).png', label:'Saat Bersama', emoji:'🎵' },
+  { src:'picture (8).png', label:'Menaiki Bangkai Pesawat', emoji:'🦋' },
+  { src:'picture (10).png', label:'Bapak dan Putri Kecil', emoji:'🌈' },
+  { src:'picture (11).png', label:'Masa Muda', emoji:'✨' },
+  { src:'picture (5).png', label:'Menimkati Senja', emoji:'🎁' },
+  { src:'picture (4).png', label:'Memandang Laut', emoji:'🌙' },
+];
+
+const PLANET_DEFS = [
+  { r:50, color:'#c07a2f', rings:true,  ringColor:'rgba(200,150,80,.45)',  speed:.00018, dist:.82, angle:0.4 },
+  { r:35, color:'#7b5ea7', rings:false, ringColor:null,                     speed:.00028, dist:.68, angle:2.1 },
+  { r:28, color:'#3a7bd5', rings:false, ringColor:null,                     speed:.00040, dist:.55, angle:4.7 },
+  { r:20, color:'#c0392b', rings:false, ringColor:null,                     speed:.00055, dist:.42, angle:1.2 },
+  { r:42, color:'#2e8b57', rings:true,  ringColor:'rgba(80,200,120,.35)',   speed:.00022, dist:.75, angle:3.5 },
+];
+
+function initGalaxy() {
+  galCanvas=$('galaxy-canvas');
+  if (!galCanvas) return;
+  galCtx=galCanvas.getContext('2d');
+  galW=galCanvas.width=window.innerWidth;
+  galH=galCanvas.height=window.innerHeight;
+
+  const cx=galW/2, cy=galH/2;
+
+  // Galaxy particles 
+  particles=[];
+  const arms=3, pCount=Math.min(2000,Math.floor(galW*galH/800));
+  for (let i=0;i<pCount;i++){
+    const arm=Math.floor(Math.random()*arms);
+    const t=Math.pow(Math.random(),.6);
+    const baseR=60+t*Math.min(galW,galH)*.46;
+    const spread=rnd(-22,22)*(1-t*.6);
+    const θ=arm*(PI2/arms)+t*4.5+spread*.012;
+    const rx=baseR, ry=baseR*.42;
+    const noise={x:rnd(-18,18)*t, y:rnd(-10,10)*t};
+    const brightness=rnd(50,100);
+    const hue=rnd(220,340);
+    particles.push({
+      x: cx+Math.cos(θ)*rx+noise.x,
+      y: cy+Math.sin(θ)*ry+noise.y,
+      r: rnd(.2,1.4)*(1-t*.5),
+      a: rnd(.3,.95),
+      da: (Math.random()-.5)*.008,
+      hue, brightness,
+      baseTheta:θ, baseR:rx, baseRY:ry,
+      cx, cy, speed: rnd(.00005,.0002), noise
+    });
+  }
+
+  // Planets 
+  planets=PLANET_DEFS.map(d=>({
+    ...d,
+    angle: d.angle,
+    cx, cy,
+    distX: Math.min(galW,galH)*d.dist*.5,
+    distY: Math.min(galW,galH)*d.dist*.22,
+  }));
+
+  // =====================================================
+  //  PERBAIKAN LAYOUT FOTO (POSISI DI TENGAH PAS)
+  // =====================================================
+  photoNodes = [];
+  
+  const baseSize = Math.min(galW * 0.12, galH * 0.12, 70); 
+  
+  const heartTemplate = [
+    { x:  0.00, y:  0.75 }, // 0: Bawah (Ujung lancip)
+    { x:  0.35, y:  0.45 }, // 1: Kanan bawah
+    { x:  0.70, y:  0.10 }, // 2: Kanan tengah
+    { x:  0.85, y: -0.35 }, // 3: Kanan atas luar
+    { x:  0.45, y: -0.70 }, // 4: Kanan puncak (cuping)
+    { x:  0.00, y: -0.25 }, // 5: Tengah lekukan (V atas)
+    { x: -0.45, y: -0.70 }, // 6: Kiri puncak (cuping)
+    { x: -0.85, y: -0.35 }, // 7: Kiri atas luar
+    { x: -0.70, y:  0.10 }, // 8: Kiri tengah
+    { x: -0.35, y:  0.45 }, // 9: Kiri bawah
+  ];
+
+  // 3. POSISI Y DIGESER KE TENGAH
+  // 0.52 berarti posisinya pas di tengah layar, turun sedikit dari header atas
+  const heartCY = galH * 0.52; 
+  const heartCX = galW / 2;
+  
+  const spreadX = Math.min(galW * 0.38, 400); 
+  const spreadY = Math.min(galH * 0.35, 350);
+
+  const total = Math.min(PHOTOS.length, heartTemplate.length);
+
+  for (let i = 0; i < total; i++) {
+    const pos = heartTemplate[i];
+    
+    const finalX = heartCX + (pos.x * spreadX);
+    const finalY = heartCY + (pos.y * spreadY);
+
+    photoNodes.push({
+      ...PHOTOS[i],
+      i,
+      x: finalX,
+      y: finalY,
+      vx: 0, 
+      vy: 0,
+      size: baseSize,
+      pulse: 0, 
+      pulseSpeed: 0.05,
+      hovered: false,
+      alpha: 0, 
+      targetAlpha: 1,
+    });
+  }
+  // =====================================================
+  //  END PERBAIKAN LAYOUT
+  // =====================================================
+
+  if (!galInited) {
+    galInited=true;
+    galCanvas.addEventListener('mousemove', e=>{
+      const r=galCanvas.getBoundingClientRect();
+      mouseGX=e.clientX-r.left; mouseGY=e.clientY-r.top;
+      checkHover(mouseGX,mouseGY);
+    });
+    galCanvas.addEventListener('touchmove', e=>{
+      const r=galCanvas.getBoundingClientRect();
+      const t=e.touches[0];
+      mouseGX=t.clientX-r.left; mouseGY=t.clientY-r.top;
+      checkHover(mouseGX,mouseGY);
+    },{passive:true});
+    galCanvas.addEventListener('click', e=>{
+      const r=galCanvas.getBoundingClientRect();
+      handleClick(e.clientX-r.left, e.clientY-r.top);
+    });
+    galCanvas.addEventListener('touchend', e=>{
+      handleClick(mouseGX, mouseGY);
+    });
+    animGalaxy();
+  }
+}
+
+function checkHover(mx,my){
+  let anyHover = false;
+  for (const n of photoNodes){
+    // Gunakan area hit yang sedikit lebih besar dari visual agar mudah di klik
+    const d=Math.hypot(n.x-mx, n.y-my);
+    n.hovered = d < n.size * 0.6;
+    if(n.hovered) anyHover = true;
+  }
+  galCanvas.style.cursor = anyHover ? 'pointer':'none';
+}
+
+function handleClick(cx,cy){
+  for (const n of photoNodes){
+    if (Math.hypot(n.x-cx, n.y-cy) < n.size * 0.6){
+      openLB(n); return;
+    }
+  }
+}
+
+function animGalaxy(){
+  if (!galCanvas || !galCtx || !$('scene-galaxy').classList.contains('active-scene')) return;
+  galTick++;
+  galCtx.clearRect(0,0,galW,galH);
+
+  const cx=galW/2, cy=galH/2;
+  
+  // 1. BG Nebula
+  const grad=galCtx.createRadialGradient(cx,cy,0,cx,cy,Math.min(galW,galH)*.6);
+  grad.addColorStop(0,'rgba(30,0,60,.28)');
+  grad.addColorStop(.5,'rgba(10,0,30,.18)');
+  grad.addColorStop(1,'transparent');
+  galCtx.fillStyle=grad; galCtx.fillRect(0,0,galW,galH);
+
+  // Nebula clouds
+  const nebs=[
+    {x:cx*.65,y:cy*.8,r:galW*.2,c:'rgba(80,0,160,.08)'},
+    {x:cx*1.35,y:cy*1.2,r:galW*.18,c:'rgba(160,0,80,.07)'},
+    {x:cx,y:cy*.5,r:galW*.14,c:'rgba(0,60,160,.07)'},
+  ];
+  for (const nb of nebs){
+    const ng=galCtx.createRadialGradient(nb.x,nb.y,0,nb.x,nb.y,nb.r);
+    ng.addColorStop(0,nb.c); ng.addColorStop(1,'transparent');
+    galCtx.fillStyle=ng; galCtx.fillRect(0,0,galW,galH);
+  }
+
+// ==========================================
+  //  EFEK BINTANG JATUH (HUJAN METEOR LEBAT)
+  // ==========================================
+  // Peluang dinaikkan drastis jadi 40% setiap frame!
+  const meteorChance = Math.random();
+  if (meteorChance < 0.4) {
+    // Kalau beruntung (10% peluang), muncul 2 bintang jatuh sekaligus
+    const spawnCount = meteorChance < 0.1 ? 2 : 1; 
+    
+    for (let k = 0; k < spawnCount; k++) {
+      galShootingStars.push({
+        x: Math.random() * galW * 2,         // Muncul dari jangkauan yang lebih luas di kanan
+        y: Math.random() * galH - 300,       // Titik awal lebih menyebar dari atas ke tengah
+        vx: rnd(-15, -35),                   // Meluncur jauh lebih cepat ke kiri
+        vy: rnd(10, 25),                     // Menukik ke bawah
+        len: rnd(100, 300),                  // Ekor lebih panjang dan dramatis
+        a: rnd(0.8, 1),                      // Opacity awal
+        // Tambahan warna keemasan agar makin cantik
+        color: ['255,255,255', '255,200,255', '200,255,255', '255,230,150'][Math.floor(Math.random()*4)]
+      });
+    }
+  }
+
+  // Render dan animasikan bintang jatuh
+  for (let i = galShootingStars.length - 1; i >= 0; i--) {
+    const ss = galShootingStars[i];
+    
+    galCtx.beginPath();
+    galCtx.moveTo(ss.x, ss.y);
+    galCtx.lineTo(ss.x - ss.vx * (ss.len/20), ss.y - ss.vy * (ss.len/20));
+    
+    const ssGrad = galCtx.createLinearGradient(ss.x, ss.y, ss.x - ss.vx*6, ss.y - ss.vy*6);
+    ssGrad.addColorStop(0, `rgba(${ss.color}, ${ss.a})`);
+    ssGrad.addColorStop(1, 'transparent');
+    
+    galCtx.strokeStyle = ssGrad;
+    galCtx.lineWidth = rnd(1.5, 3.5); // Ketebalan bervariasi biar lebih realistis
+    galCtx.stroke();
+
+    ss.x += ss.vx;
+    ss.y += ss.vy;
+    ss.a -= 0.012; // Sedikit lebih lambat memudarnya agar ekornya terasa panjang
+
+    // Hapus jika sudah tak terlihat atau keluar layar banget
+    if (ss.a <= 0 || ss.x < -300 || ss.y > galH + 300) {
+      galShootingStars.splice(i, 1);
+    }
+  }
+  // ==========================================
+
+  // 2. Galaxy particles
+  const rot=galTick*.00015;
+  for (const p of particles){
+    p.a+=p.da; if(p.a>1||p.a<0.1) p.da*=-1;
+    const θ=p.baseTheta+rot;
+    p.x=p.cx+Math.cos(θ)*p.baseR+p.noise.x;
+    p.y=p.cy+Math.sin(θ)*p.baseRY+p.noise.y;
+    galCtx.beginPath();
+    galCtx.arc(p.x,p.y,p.r,0,PI2);
+    galCtx.fillStyle=`hsla(${p.hue},70%,${p.brightness}%,${p.a})`;
+    galCtx.fill();
+  }
+
+  // 3. Planets
+  for (const pl of planets){
+    pl.angle+=pl.speed;
+    const px=pl.cx+Math.cos(pl.angle)*pl.distX;
+    const py=pl.cy+Math.sin(pl.angle)*pl.distY;
+
+    galCtx.save();
+    // Shadow for depth
+    galCtx.beginPath();
+    galCtx.arc(px,py,pl.r,0,PI2);
+    const pGrad=galCtx.createRadialGradient(px-pl.r*.3,py-pl.r*.3,0,px,py,pl.r);
+    pGrad.addColorStop(0,'rgba(255,255,255,.2)');
+    pGrad.addColorStop(.4,pl.color);
+    pGrad.addColorStop(1,'rgba(0,0,0,.7)');
+    galCtx.fillStyle=pGrad;
+    galCtx.fill();
+
+    // Atmosphere glow
+    galCtx.beginPath();
+    galCtx.arc(px,py,pl.r*1.2,0,PI2);
+    const aGrad=galCtx.createRadialGradient(px,py,pl.r*.9,px,py,pl.r*1.3);
+    const c = pl.color.startsWith('#') ? pl.color : '#ffffff';
+    aGrad.addColorStop(0, hexToRgba(c, 0.15));
+    aGrad.addColorStop(1,'transparent');
+    galCtx.fillStyle=aGrad; galCtx.fill();
+
+    // Rings
+    if (pl.rings){
+      galCtx.save();
+      galCtx.translate(px,py);
+      galCtx.scale(1,.35);
+      galCtx.beginPath();
+      galCtx.arc(0,0,pl.r*1.9,0,PI2);
+      galCtx.strokeStyle=pl.ringColor; galCtx.lineWidth=pl.r*.45;
+      galCtx.stroke();
+      galCtx.restore();
+    }
+    galCtx.restore();
+  }
+
+  // 4. Photo nodes
+  for (const n of photoNodes){
+    // Fade in effect
+    n.alpha = lerp(n.alpha, n.targetAlpha, 0.03);
+    
+    n.pulse+=n.pulseSpeed;
+    
+    const hoverSc = n.hovered ? 1.3 : 1.0;
+    const pulseSc = 1 + Math.sin(n.pulse) * 0.12; 
+    const s = n.size * hoverSc * pulseSc;
+    
+    const haloAlpha = n.hovered ? 0.5 : 0.2 + Math.sin(n.pulse)*0.05;
+    const haloSize = s * (n.hovered ? 1.5 : 1.2);
+
+    galCtx.save();
+    galCtx.globalAlpha = n.alpha;
+    galCtx.translate(n.x, n.y);
+
+    // Glow halo 
+    const haloG=galCtx.createRadialGradient(0,0,s*.2,0,0,haloSize);
+    haloG.addColorStop(0,`rgba(255,110,180,${haloAlpha})`);
+    haloG.addColorStop(0.5,`rgba(120,60,200,${haloAlpha * 0.5})`);
+    haloG.addColorStop(1,'transparent');
+    galCtx.beginPath(); 
+    galCtx.arc(0,0,haloSize,0,PI2);
+    galCtx.fillStyle=haloG; galCtx.fill();
+
+    // Photo card 
+    const hs=s/2;
+    galCtx.beginPath();
+    roundRect(galCtx,-hs,-hs,s,s,s*.15);
+    
+    // Border Gradasi
+    const bd=galCtx.createLinearGradient(-hs,-hs,hs,hs);
+    bd.addColorStop(0,n.hovered?'rgba(255,200,255,1)':'rgba(255,110,180,0.8)');
+    bd.addColorStop(1,n.hovered?'rgba(200,150,255,1)':'rgba(100,60,200,0.8)');
+    galCtx.strokeStyle=bd;
+    galCtx.lineWidth=n.hovered?3:2;
+    
+    if (n.src){
+      if (!n._img){
+        n._img=new Image(); n._img.src=n.src;
+        n._img.onload=()=>n._loaded=true;
+        n._img.onerror=()=> { n._loaded=true; n._error=true; }; 
+      }
+      
+      if (n._loaded && !n._error){
+        galCtx.save();
+        galCtx.clip(); 
+        galCtx.drawImage(n._img,-hs,-hs,s,s);
+        galCtx.restore();
+      } else {
+        galCtx.fillStyle='rgba(20,0,50,0.9)'; galCtx.fill();
+        drawEmoji(galCtx, n.emoji || '🖼️', s*.5);
+      }
+    } else {
+      galCtx.fillStyle='rgba(20,0,50,0.9)'; galCtx.fill();
+      drawEmoji(galCtx, n.emoji || '❤️', s*.5);
+    }
+    
+    galCtx.stroke();
+
+    // Label 
+    if (n.hovered){
+      galCtx.font=`bold ${Math.max(12, s*.14)}px Raleway, sans-serif`;
+      galCtx.fillStyle='white';
+      galCtx.textAlign='center';
+      galCtx.textBaseline='top';
+      galCtx.shadowColor='rgba(255,100,200,1)';
+      galCtx.shadowBlur=10;
+      galCtx.fillText(n.label, 0, hs + 10);
+      
+      galCtx.font=`${s*0.2}px serif`;
+      galCtx.fillText('👆', 0, hs + 10 + Math.max(14, s*.16));
+      galCtx.shadowBlur=0;
+    }
+
+    galCtx.restore();
+  }
+
+  requestAnimationFrame(animGalaxy);
+}
+// Helpers
+function drawEmoji(ctx, emoji, size){
+  ctx.font=`${size}px serif`;
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillStyle='white';
+  ctx.fillText(emoji,0,0);
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  if (w<2*r) r=w/2; if (h<2*r) r=h/2;
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+// =====================================================
+//  LIGHTBOX
+// =====================================================
+function openLB(n){
+  const lbC=$('lb-content');
+  const lbCap=$('lb-caption');
+  if(!lbC || !lbCap) return;
+  
+  if(n.src && !n._error){
+    lbC.innerHTML=`<img src="${n.src}" alt="${n.label}" style="max-width:100%; max-height:70vh; border-radius:12px; display:block; margin:0 auto; border:2px solid rgba(255,110,180,0.5);">`;
+  } else {
+    lbC.innerHTML=`<div class="lb-placeholder" style="font-size:5rem; text-align:center;">${n.emoji || '🖼️'}<div style="margin-top:1rem;font-size:1rem;font-family:'Raleway',sans-serif;color:rgba(255,255,255,.7)">${n.label}</div></div>`;
+  }
+  lbCap.textContent=n.label;
+  $('lightbox').classList.add('open');
+  
+  // Pause galaxy animation insertion if needed for performance
+}
+
+function closeLB(){ 
+  $('lightbox').classList.remove('open'); 
+}
+
+const lb = $('lightbox');
+if(lb) {
+  lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
+  const lbClose = $('lb-close');
+  if(lbClose) lbClose.addEventListener('click',closeLB);
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLB(); });
+</script>
+</body>
+</html>
